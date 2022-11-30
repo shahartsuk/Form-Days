@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using WindowsFromsApp.CW30._11;
 
 namespace WindowsFromsApp
 {
     public partial class Form1 : Form
     {
+        IItem[] items = new IItem[5];
+        int counter = 0;
         public enum WorkDays
         {
             Sunday,
@@ -26,10 +29,50 @@ namespace WindowsFromsApp
         {
             InitializeComponent();
         }
+        private void PrintButton_Click(object sender, EventArgs e)
+        {
+            string drinks="";
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (items[i] == null)
+                {
+                    MessageBox.Show("No drinks in the list.");
+                    return;
+                }
+                else if (items[i] is Kinly) drinks += ("Kinly cost:" + items[i].GetPrice() + "$\n");
+                else drinks += ("Cola cost:" + items[i].GetPrice() + "$\n");
+            }
+            for (int i = 0; i < items.Length; i++)
+            {
+                items[i]=null;
+                counter = 0;
+            }
+            MessageBox.Show(drinks);
+        }
+        private void colaButton_Click(object sender, EventArgs e)
+        {
+            Cola cola = new Cola();
+            cola.GetPrice();
+            if(counter < 5)
+            {
+                items[counter] = cola;
+                counter++;
+            }
+        }
+        private void kinlyButton_Click(object sender, EventArgs e)
+        {
+            Kinly kinly = new Kinly();
+            kinly.GetPrice();
+            if (counter < 5)
+            {
+                items[counter] = kinly;
+                counter++;
+            }
+        }
 
         private void label1_Click(object sender, EventArgs e)
         {
-
+            
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -77,6 +120,13 @@ namespace WindowsFromsApp
         {
             AgeBox.Text = "";
         }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
     
 }
